@@ -5,6 +5,10 @@
   @apply hidden;
 }
 
+@theme {
+  --color-primary: #5f6fff;
+}
+
 * {
   font-family: Outfit;
 }
