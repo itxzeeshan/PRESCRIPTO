@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
-import { assets } from "../assets/assets";
 import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
@@ -10,6 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const { setAToken, backendUrl } = useContext(AdminContext);
+  const { setDToken } = useContext(DoctorContext);
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -26,6 +27,18 @@ const Login = () => {
         } else {
           toast.error(data.message);
         }
+      } else {
+        const { data } = await axios.post(backendUrl + "/api/doctor/login", {
+          email,
+          password,
+        });
+        if (data.success) {
+          localStorage.setItem("dToken", data.token);
+          setDToken(data.token);
+          console.log(data.token);
+        } else {
+          toast.error(data.message);
+        }
       }
     } catch (error) {}
   };
@@ -34,7 +47,7 @@ const Login = () => {
     <form onSubmit={onSubmitHandler} className="min-h-[80vh] flex items-center">
       <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-[#5E5E5E] text-sm shadow-lg">
         <p className="text-2xl font-semibold m-auto">
-          <span className="text-blue-700"> {state} </span> Login
+          <span className="text-primary"> {state} </span> Login
         </p>
         <div className="w-full">
           <p>Email</p>
@@ -56,7 +69,7 @@ const Login = () => {
             required
           />
         </div>
-        <button className="bg-primary text-white w-full py-2 rounded-md text-base">
+        <button className="bg-primary text-white w-full px-4 py-2 rounded-md text-base">
           Login
         </button>
         {state === "Admin" ? (

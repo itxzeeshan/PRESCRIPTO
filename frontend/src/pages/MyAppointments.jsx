@@ -124,6 +124,11 @@ const MyAppointments = () => {
                     Appointment cancelled
                   </button>
                 )}
+                {item.isCompleted && (
+                  <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">
+                    Completed
+                  </button>
+                )}
               </div>
             </div>
           );

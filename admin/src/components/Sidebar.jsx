@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { AdminContext } from "../context/AdminContext";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
-// import { DoctorContext } from "../context/DoctorContext";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Sidebar = () => {
   const { aToken } = useContext(AdminContext);
-  //   const { dToken } = useContext(DoctorContext);
+  const { dToken } = useContext(DoctorContext);
 
   return (
     <div className="min-h-screen bg-white border-r">
@@ -62,7 +62,7 @@ const Sidebar = () => {
         </ul>
       )}
 
-      {/* {dToken && (
+      {dToken && (
         <ul className="text-[#515151] mt-5">
           <NavLink
             className={({ isActive }) =>
@@ -100,7 +100,7 @@ const Sidebar = () => {
             <p className="hidden md:block">Profile</p>
           </NavLink>
         </ul>
-      )} */}
+      )}
     </div>
   );
 };
